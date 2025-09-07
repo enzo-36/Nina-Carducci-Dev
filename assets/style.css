@@ -105,7 +105,7 @@ body {
 }
 .gallery .nav .nav-link.active-tag {
   background-color: black; /*couleur adapté pour score acces' changement rapide au besoin*/
-  color: white; 
+  color: white; /*projet clear*/
 }
 .carousel-control-prev-icon{
 	background-color: black;
