@@ -104,7 +104,7 @@ body {
 	cursor: pointer;
 }
 .gallery .nav .nav-link.active-tag {
-  background-color: black; /* choisir la couleur */
+  background-color: black; /*couleur adapté pour score acces' changement rapide au besoin*/
   color: white; 
 }
 .carousel-control-prev-icon{
