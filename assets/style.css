@@ -104,7 +104,7 @@ body {
 	cursor: pointer;
 }
 .gallery .nav .nav-link.active-tag {
-  background-color: black;
+  background-color: black; /* choisir la couleur */
   color: white; 
 }
 .carousel-control-prev-icon{
