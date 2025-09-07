@@ -41,7 +41,7 @@
         options.tagsPosition === "top" ? gallery.prepend(tagHtml) : gallery.append(tagHtml);
       }
 
-      
+    
       if (options.lightBox) {
         const navPrev = options.navigation ? '<div class="mg-prev" style="cursor:pointer;position:absolute;top:50%;left:-15px;background:white;"><</div>' : '';
         const navNext = options.navigation ? '<div class="mg-next" style="cursor:pointer;position:absolute;top:50%;right:-15px;background:white;">></div>' : '';
