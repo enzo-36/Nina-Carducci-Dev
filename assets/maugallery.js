@@ -1,92 +1,12 @@
-(function($) {
-  $.fn.mauGallery = function(options) {
-    options = $.extend({
-      columns: 3,
-      lightBox: true,
-      lightboxId: "galleryLightbox",
-      showTags: true,
-      tagsPosition: "bottom",
-      navigation: true
-    }, options);
-
-    const tagsCollection = [];
-
-    this.each(function() {
-      const gallery = $(this);
-      let row = gallery.find(".gallery-items-row");
-      if (!row.length) row = $('<div class="gallery-items-row row"></div>').appendTo(gallery);
-
-      gallery.children(".gallery-item").each(function() {
-        const item = $(this);
-        if (item.prop("tagName") === "IMG") item.addClass("img-fluid");
-
-        
-        let colClass = "col-" + Math.ceil(12 / (typeof options.columns === "number" ? options.columns : options.columns.md || 3));
-        item.wrap(`<div class='item-column mb-4 ${colClass}'></div>`);
-
-        
-        item.parent().appendTo(row);
-
-      
-        const tag = item.data("gallery-tag");
-        if (options.showTags && tag && !tagsCollection.includes(tag)) tagsCollection.push(tag);
-      });
-
-      
-      if (options.showTags) {
-        const tagHtml = `<ul class="my-4 tags-bar nav nav-pills">
+(function($){$.fn.mauGallery=function(options){options=$.extend({columns:3,lightBox:!0,lightboxId:"galleryLightbox",showTags:!0,tagsPosition:"bottom",navigation:!0},options);const tagsCollection=[];this.each(function(){const gallery=$(this);let row=gallery.find(".gallery-items-row");if(!row.length)row=$('<div class="gallery-items-row row"></div>').appendTo(gallery);gallery.children(".gallery-item").each(function(){const item=$(this);if(item.prop("tagName")==="IMG")item.addClass("img-fluid");let colClass="col-"+Math.ceil(12/(typeof options.columns==="number"?options.columns:options.columns.md||3));item.wrap(`<div class='item-column mb-4 ${colClass}'></div>`);item.parent().appendTo(row);const tag=item.data("gallery-tag");if(options.showTags&&tag&&!tagsCollection.includes(tag))tagsCollection.push(tag);});if(options.showTags){const tagHtml=`<ul class="my-4 tags-bar nav nav-pills">
           <li class="nav-item"><span class="nav-link active active-tag" data-images-toggle="all">Tous</span></li>
           ${tagsCollection.map(t => `<li class="nav-item"><span class="nav-link" data-images-toggle="${t}">${t}</span></li>`).join("")}
-        </ul>`;
-        options.tagsPosition === "top" ? gallery.prepend(tagHtml) : gallery.append(tagHtml);
-      }
-
-    
-      if (options.lightBox) {
-        const navPrev = options.navigation ? '<div class="mg-prev" style="cursor:pointer;position:absolute;top:50%;left:-15px;background:white;"><</div>' : '';
-        const navNext = options.navigation ? '<div class="mg-next" style="cursor:pointer;position:absolute;top:50%;right:-15px;background:white;">></div>' : '';
-        if (!$("#" + options.lightboxId).length) {
-          gallery.append(`<div class="modal fade" id="${options.lightboxId}" tabindex="-1" role="dialog" aria-hidden="true">
+        </ul>`;options.tagsPosition==="top"?gallery.prepend(tagHtml):gallery.append(tagHtml)}
+if(options.lightBox){const navPrev=options.navigation?'<div class="mg-prev" style="cursor:pointer;position:absolute;top:50%;left:-15px;background:white;"><</div>':'';const navNext=options.navigation?'<div class="mg-next" style="cursor:pointer;position:absolute;top:50%;right:-15px;background:white;">></div>':'';if(!$("#"+options.lightboxId).length){gallery.append(`<div class="modal fade" id="${options.lightboxId}" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog" role="document">
               <div class="modal-content">
                 <div class="modal-body">${navPrev}<img class="lightboxImage img-fluid"/ >${navNext}</div>
               </div>
             </div>
-          </div>`);
-        }
-      }
-
-      gallery.fadeIn(500);
-    });
-
-    
-    this.on("click", ".gallery-item", function() {
-      if (options.lightBox && $(this).prop("tagName") === "IMG") {
-        $(`#${options.lightboxId} .lightboxImage`).attr("src", $(this).attr("src"));
-        $(`#${options.lightboxId}`).modal("toggle");
-      }
-    });
-
-    this.on("click", ".tags-bar .nav-link", function() {
-      if ($(this).hasClass("active-tag")) return;
-      $(".tags-bar .active-tag").removeClass("active active-tag");
-      $(this).addClass("active-tag");
-      const tag = $(this).data("images-toggle");
-      $(".gallery-item").each(function() {
-        const show = tag === "all" || $(this).data("gallery-tag") === tag;
-        $(this).parents(".item-column").toggle(show);
-      });
-    });
-
-    this.on("click", ".mg-prev, .mg-next", function() {
-      const imgs = $(".gallery-item:visible");
-      const lightImg = $(".lightboxImage");
-      const current = imgs.filter((_, i) => $(i).attr("src") === lightImg.attr("src"))[0];
-      let idx = imgs.index(current);
-      idx = $(this).hasClass("mg-prev") ? (idx - 1 + imgs.length) % imgs.length : (idx + 1) % imgs.length;
-      lightImg.attr("src", $(imgs[idx]).attr("src"));
-    });
-
-    return this;
-  };
-})(jQuery);
+          </div>`)}}
+gallery.fadeIn(500)});this.on("click",".gallery-item",function(){if(options.lightBox&&$(this).prop("tagName")==="IMG"){$(`#${options.lightboxId} .lightboxImage`).attr("src",$(this).attr("src"));$(`#${options.lightboxId}`).modal("toggle")}});this.on("click",".tags-bar .nav-link",function(){if($(this).hasClass("active-tag"))return;$(".tags-bar .active-tag").removeClass("active active-tag");$(this).addClass("active-tag");const tag=$(this).data("images-toggle");$(".gallery-item").each(function(){const show=tag==="all"||$(this).data("gallery-tag")===tag;$(this).parents(".item-column").toggle(show)})});this.on("click",".mg-prev, .mg-next",function(){const imgs=$(".gallery-item:visible");const lightImg=$(".lightboxImage");const current=imgs.filter((_,i)=>$(i).attr("src")===lightImg.attr("src"))[0];let idx=imgs.index(current);idx=$(this).hasClass("mg-prev")?(idx-1+imgs.length)%imgs.length:(idx+1)%imgs.length;lightImg.attr("src",$(imgs[idx]).attr("src"))});return this}})(jQuery)
